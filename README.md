@@ -1,5 +1,6 @@
 -- Script para marcar aliados e inimigos, auto mira e auto disparo no jogo Arsenal
 -- Adicionada funcionalidade para ligar/desligar com a tecla "B"
+-- Adicionado FOV e círculo no centro da tela
 
 local enabled = true
 
@@ -16,7 +17,7 @@ local function identifyPlayers()
     end
 end
 
--- Função para auto mira
+-- Função para auto mira na cabeça dos inimigos
 local function autoAim()
     local closestEnemy = nil
     local shortestDistance = math.huge
@@ -55,6 +56,23 @@ game:GetService("UserInputService").InputBegan:Connect(function(input, gameProce
         toggleScript()
     end
 end)
+
+-- Função para desenhar o círculo no centro da tela
+local function drawCircle()
+    local screenGui = Instance.new("ScreenGui", game.Players.LocalPlayer:WaitForChild("PlayerGui"))
+    local circle = Instance.new("Frame", screenGui)
+    circle.Size = UDim2.new(0, 100, 0, 100)
+    circle.Position = UDim2.new(0.5, -50, 0.5, -50)
+    circle.BackgroundTransparency = 1
+    local uiCorner = Instance.new("UICorner", circle)
+    uiCorner.CornerRadius = UDim.new(1, 0)
+    local uiStroke = Instance.new("UIStroke", circle)
+    uiStroke.Thickness = 2
+    uiStroke.Color = Color3.new(1, 1, 1)
+end
+
+-- Desenhar o círculo no centro da tela
+drawCircle()
 
 -- Loop para atualizar constantemente
 while true do
